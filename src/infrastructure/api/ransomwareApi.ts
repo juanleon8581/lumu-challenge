@@ -1,7 +1,17 @@
-import type { IVictimAPI } from "../types/IVictimApi";
-import { apiClient } from "./apiClient";
+import type { VictimsRepository } from "@/domain/repositories/Victims.repository";
 
-export const getVictims = async (): Promise<IVictimAPI[]> => {
-  const response = await apiClient.get("/recentvictims");
-  return response.data;
-};
+import { apiClient } from "./apiClient";
+import type { IVictim } from "@/domain/interfaces/IVictim";
+import type { IVictimAPI } from "../types/IVictimApi";
+import { Victim } from "@/domain/entities/Victim";
+
+export class VictimsRepositoryImpl implements VictimsRepository {
+  async getRecent(): Promise<IVictim[]> {
+    const response = await apiClient.get("/recentvictims");
+    const victims: IVictim[] = response.data.map((victim: IVictimAPI) =>
+      Victim.fromJson(victim)
+    );
+
+    return victims;
+  }
+}
