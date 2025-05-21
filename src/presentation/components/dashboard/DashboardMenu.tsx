@@ -1,15 +1,16 @@
-import { Camera, ChartBarIncreasing } from "lucide-react";
+import { PersonStanding, UsersRound } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const menuOptions = [
   {
-    name: "Dashboard",
-    icon: <ChartBarIncreasing />,
+    name: "Victimas",
+    icon: <PersonStanding />,
     href: "/",
   },
   {
-    name: "Otro",
-    icon: <Camera />,
-    href: "/",
+    name: "Grupos",
+    icon: <UsersRound />,
+    href: "/groups",
   },
 ];
 
@@ -29,7 +30,7 @@ export const DashboardMenu = () => {
         <ul className="mb-4 flex flex-col gap-1">
           {menuOptions.map((option) => (
             <li key={option.name}>
-              <a className="active" href={option.href}>
+              <Link className="active" to={option.href}>
                 <button
                   className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize"
                   type="button"
@@ -39,7 +40,7 @@ export const DashboardMenu = () => {
                     {option.name}
                   </p>
                 </button>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
