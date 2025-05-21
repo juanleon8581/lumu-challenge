@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Home } from "./presentation/pages/home";
+import { Home } from "./presentation/pages/Home";
 
 import "@/presentation/styles/general.css";
 
