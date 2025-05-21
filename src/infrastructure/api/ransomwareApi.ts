@@ -1,7 +1,7 @@
+import type { IVictimAPI } from "../types/IVictimApi";
 import { apiClient } from "./apiClient";
-import type { IVictim } from "@/domain/interfaces/IVictim";
 
-export const getVictims = async (): Promise<IVictim[]> => {
+export const getVictims = async (): Promise<IVictimAPI[]> => {
   const response = await apiClient.get("/recentvictims");
   return response.data;
 };
