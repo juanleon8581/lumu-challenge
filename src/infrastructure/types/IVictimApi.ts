@@ -1,10 +1,10 @@
 export interface IVictimAPI {
   activity: string;
-  attackdate: Date;
+  attackdate: string;
   claim_url: string;
   country: string;
   description: string;
-  discovered: Date;
+  discovered: string;
   domain: string;
   duplicates: Duplicate[];
   extrainfos: string[] | ExtrainfosClass;
@@ -18,8 +18,8 @@ export interface IVictimAPI {
 }
 
 export interface Duplicate {
-  attackdate: Date;
-  date: Date;
+  attackdate: string;
+  date: string;
   group: string;
   link: string;
 }
