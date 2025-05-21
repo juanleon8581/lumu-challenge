@@ -3,9 +3,14 @@ import { createRoot } from "react-dom/client";
 import { Home } from "./presentation/pages/Home";
 
 import "@/presentation/styles/general.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Home />
+    <QueryClientProvider client={queryClient}>
+      <Home />
+    </QueryClientProvider>
   </StrictMode>
 );
