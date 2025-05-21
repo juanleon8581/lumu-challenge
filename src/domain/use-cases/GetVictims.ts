@@ -13,7 +13,12 @@ export class GetVictims implements IGetVictimsUseCase {
   }
 
   async execute(): Promise<IVictim[]> {
-    const victims = await this.repository.getRecent();
-    return victims;
+    try {
+      const victims = await this.repository.getRecent();
+      return victims;
+    } catch (error) {
+      console.error("Failed to fetch recent victims:", error);
+      throw new Error("Failed to fetch recent victims data");
+    }
   }
 }
