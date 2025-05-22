@@ -10,10 +10,23 @@ import {
   type ChartOptions,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { type ProcessedChartData } from "@/presentation/utils/chartDataUtils";
+
+// Definir la estructura de los datos para el gráfico
+interface ChartDataset {
+  label: string;
+  data: number[];
+  backgroundColor: string;
+  borderColor: string;
+  borderWidth?: number;
+}
+
+interface ChartData {
+  labels: string[];
+  datasets: ChartDataset[];
+}
 
 interface IBarChartProps {
-  data: ProcessedChartData;
+  data: ChartData;
   chartTitle?: string;
 }
 
@@ -29,7 +42,8 @@ ChartJS.register(
 );
 
 export const BarChart = ({ data, chartTitle }: IBarChartProps) => {
-  if (!data?.datasets?.length) {
+  // Verificar si hay datos para mostrar
+  if (!data?.labels || !data?.datasets?.length) {
     return <div>No hay datos disponibles</div>;
   }
 
