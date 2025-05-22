@@ -1,14 +1,9 @@
-import { useEffect } from "react";
-import { VictimDashboardCharts } from "@/presentation/components/dashboard/VictimDashboardCharts";
 import { ScrollArea } from "../components/ui/scroll-area";
-import { useVictimsStore } from "@/presentation/store/victimsStore";
+import { useVictims } from "../hooks/useVictims";
+import { VictimDashboardCharts } from "../components/dashboard/VictimDashboardCharts";
 
 export const VictimsCarts = () => {
-  const { victims, isLoading, error, fetchVictims } = useVictimsStore();
-
-  useEffect(() => {
-    fetchVictims();
-  }, [fetchVictims]);
+  const { victims, isLoading, error } = useVictims();
 
   if (isLoading) return <div>Cargando gráfico...</div>;
   if (error) return <div>Error al cargar datos para el gráfico</div>;

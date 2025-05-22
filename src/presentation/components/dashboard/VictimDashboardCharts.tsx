@@ -4,7 +4,7 @@ import { PieChart } from "./PieChart";
 import { useVictimsStore } from "@/presentation/store/victimsStore";
 
 export const VictimDashboardCharts = () => {
-  const { victims } = useVictimsStore();
+  const victims = useVictimsStore((state) => state.victims);
 
   // Agrupar víctimas por grupo de ransomware
   const groupCounts: { [keyof: string]: number } = {};
