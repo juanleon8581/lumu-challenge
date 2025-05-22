@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { VictimsRepositoryImpl } from "@/infrastructure/api/ransomwareApi";
+import { VictimsRepositoryImpl } from "@/infrastructure/api/victims.repository.impl";
 import { GetVictims } from "@/domain/use-cases/GetVictims";
 import { useVictimsStore } from "../store/victimsStore";
 

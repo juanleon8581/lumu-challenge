@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { VictimsRepositoryImpl } from "@/infrastructure/api/ransomwareApi";
+import { VictimsRepositoryImpl } from "@/infrastructure/api/victims.repository.impl";
 import {
   Table,
   TableBody,
