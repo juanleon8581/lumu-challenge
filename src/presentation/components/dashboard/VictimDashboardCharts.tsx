@@ -1,10 +1,12 @@
 import { format, parseISO } from "date-fns";
 import { BarChart } from "./BarChart";
 import { PieChart } from "./PieChart";
-import { useVictimsStore } from "@/presentation/store/victimsStore";
+import { useVictims } from "@/presentation/hooks/useVictims";
 
 export const VictimDashboardCharts = () => {
-  const victims = useVictimsStore((state) => state.victims);
+  const { victims } = useVictims();
+  if (!victims || victims.length === 0)
+    return <div>No hay datos disponibles</div>;
 
   // Agrupar víctimas por grupo de ransomware
   const groupCounts: { [keyof: string]: number } = {};
