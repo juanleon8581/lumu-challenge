@@ -1,33 +1,35 @@
 import { format, parseISO } from "date-fns";
 import { BarChart } from "./BarChart";
 import { PieChart } from "./PieChart";
-import type { IVictim } from "@/domain/interfaces/IVictim";
+import { useVictimsStore } from "@/presentation/store/victimsStore";
 
-export const VictimDashboardCharts = ({ data }: { data: IVictim[] }) => {
+export const VictimDashboardCharts = () => {
+  const { victims } = useVictimsStore();
+
   // Agrupar víctimas por grupo de ransomware
   const groupCounts: { [keyof: string]: number } = {};
-  data.forEach((victim) => {
+  victims.forEach((victim) => {
     const group = victim.group || "Desconocido";
     groupCounts[group] = (groupCounts[group] || 0) + 1;
   });
 
   // Agrupar víctimas por sector
   const sectorCounts: { [keyof: string]: number } = {};
-  data.forEach((victim) => {
+  victims.forEach((victim) => {
     const sector = victim.sector ?? "Desconocido";
     sectorCounts[sector] = (sectorCounts[sector] || 0) + 1;
   });
 
   // Agrupar víctimas por país
   const countryCounts: { [keyof: string]: number } = {};
-  data.forEach((victim) => {
+  victims.forEach((victim) => {
     const country = victim.country ?? "Desconocido";
     countryCounts[country] = (countryCounts[country] || 0) + 1;
   });
 
   // Agrupar víctimas por mes
   const monthCounts: { [keyof: string]: number } = {};
-  data.forEach((victim) => {
+  victims.forEach((victim) => {
     try {
       const date = parseISO(victim.attackDate);
       const month = format(date, "MMM yyyy");
