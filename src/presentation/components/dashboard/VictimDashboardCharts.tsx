@@ -1,23 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { VictimsRepositoryImpl } from "@/infrastructure/api/ransomwareApi";
-import { GetVictims } from "@/domain/use-cases/GetVictims";
-
 import { format, parseISO } from "date-fns";
 import { BarChart } from "./BarChart";
 import { PieChart } from "./PieChart";
+import type { IVictim } from "@/domain/interfaces/IVictim";
 
-const victimsRepository = new VictimsRepositoryImpl();
-
-export const VictimDashboardCharts = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["victims"],
-    queryFn: () => new GetVictims(victimsRepository).execute(),
-  });
-
-  if (isLoading) return <div>Cargando gráficos...</div>;
-  if (error) return <div>Error al cargar datos para los gráficos</div>;
-  if (!data || data.length === 0) return <div>No hay datos disponibles</div>;
-
+export const VictimDashboardCharts = ({ data }: { data: IVictim[] }) => {
   // Agrupar víctimas por grupo de ransomware
   const groupCounts: { [keyof: string]: number } = {};
   data.forEach((victim) => {
