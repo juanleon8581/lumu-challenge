@@ -1,4 +1,3 @@
-import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,14 +9,12 @@ import {
   ArcElement,
   type ChartOptions,
 } from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { type ProcessedChartData } from "@/presentation/utils/chartDataUtils";
 
 interface IBarChartProps {
-  data: { [keyof: string]: number };
-  chartLabel: string;
+  data: ProcessedChartData;
   chartTitle?: string;
-  backgroundColor?: string;
-  borderColor?: string;
-  borderWidth?: number;
 }
 
 // Registrar los componentes necesarios de Chart.js
@@ -31,30 +28,10 @@ ChartJS.register(
   Legend
 );
 
-export const BarChart = (props: IBarChartProps) => {
-  const {
-    data,
-    chartLabel,
-    backgroundColor = "rgba(53, 162, 235, 0.5)",
-    borderColor = "rgba(53, 162, 235, 1)",
-    borderWidth = 1,
-    chartTitle,
-  } = props;
-
-  if (!data || data.length === 0) return <div>No hay datos disponibles</div>;
-
-  const chartData = {
-    labels: Object.keys(data),
-    datasets: [
-      {
-        label: chartLabel,
-        data: Object.values(data),
-        backgroundColor,
-        borderColor,
-        borderWidth,
-      },
-    ],
-  };
+export const BarChart = ({ data, chartTitle }: IBarChartProps) => {
+  if (!data?.datasets?.length) {
+    return <div>No hay datos disponibles</div>;
+  }
 
   const barOptions: ChartOptions<"bar"> = {
     responsive: true,
@@ -74,12 +51,19 @@ export const BarChart = (props: IBarChartProps) => {
           precision: 0,
         },
       },
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 90,
+          minRotation: 0,
+        },
+      },
     },
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow w-full h-[40vh] flex items-center justify-center">
-      <Bar data={chartData} options={barOptions} />
+    <div className="bg-white p-4 rounded-lg shadow w-full h-[60vh] flex items-center justify-center">
+      <Bar data={data} options={barOptions} />
     </div>
   );
 };

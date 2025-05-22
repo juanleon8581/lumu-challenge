@@ -1,64 +1,82 @@
-import { format, parseISO } from "date-fns";
 import { BarChart } from "./BarChart";
 import { PieChart } from "./PieChart";
 import { useVictims } from "@/presentation/hooks/useVictims";
+import { useChartData } from "@/presentation/hooks/useChartData";
+import { useState } from "react";
 
 export const VictimDashboardCharts = () => {
   const { victims } = useVictims();
-  if (!victims || victims.length === 0)
+  const [selectedView, setSelectedView] = useState<"combined" | "separate">(
+    "combined"
+  );
+
+  // Get processed chart data from our custom hook
+  const combinedChartData = useChartData(victims, "combined");
+  const groupChartData = useChartData(victims, "byGroup");
+  const sectorChartData = useChartData(victims, "bySector");
+  const monthChartData = useChartData(victims, "byMonth");
+  const countryChartData = useChartData(victims, "byCountry");
+
+  if (!victims || victims.length === 0) {
     return <div>No hay datos disponibles</div>;
-
-  // Agrupar víctimas por grupo de ransomware
-  const groupCounts: { [keyof: string]: number } = {};
-  victims.forEach((victim) => {
-    const group = victim.group || "Desconocido";
-    groupCounts[group] = (groupCounts[group] || 0) + 1;
-  });
-
-  // Agrupar víctimas por sector
-  const sectorCounts: { [keyof: string]: number } = {};
-  victims.forEach((victim) => {
-    const sector = victim.sector ?? "Desconocido";
-    sectorCounts[sector] = (sectorCounts[sector] || 0) + 1;
-  });
-
-  // Agrupar víctimas por país
-  const countryCounts: { [keyof: string]: number } = {};
-  victims.forEach((victim) => {
-    const country = victim.country ?? "Desconocido";
-    countryCounts[country] = (countryCounts[country] || 0) + 1;
-  });
-
-  // Agrupar víctimas por mes
-  const monthCounts: { [keyof: string]: number } = {};
-  victims.forEach((victim) => {
-    try {
-      const date = parseISO(victim.attackDate);
-      const month = format(date, "MMM yyyy");
-      monthCounts[month] = (monthCounts[month] || 0) + 1;
-    } catch (e) {
-      if (!e) return;
-      monthCounts["Fecha desconocida"] =
-        (monthCounts["Fecha desconocida"] || 0) + 1;
-    }
-  });
+  }
 
   return (
-    <div className="flex flex-col items-center justify-around gap-4 ">
-      <BarChart
-        data={groupCounts}
-        chartLabel={"# victimas"}
-        chartTitle="Victimas por grupo"
-      />
-      <PieChart data={sectorCounts} chartTitle={"Distribución por sector"} />
-      <BarChart
-        data={monthCounts}
-        chartLabel={"# Ataques por mes"}
-        chartTitle="Ataques por mes"
-        backgroundColor="rgba(75, 192, 192, 0.5)"
-        borderColor="rgba(75, 192, 192, 1)"
-      />
-      <PieChart data={countryCounts} chartTitle={"Distribución por País"} />
+    <div className="flex flex-col items-center justify-around gap-4">
+      <div className="flex gap-4 mb-4">
+        <button
+          className={`px-4 py-2 rounded ${
+            selectedView === "combined"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200"
+          }`}
+          onClick={() => setSelectedView("combined")}
+        >
+          Vista Combinada
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${
+            selectedView === "separate"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200"
+          }`}
+          onClick={() => setSelectedView("separate")}
+        >
+          Vistas Separadas
+        </button>
+      </div>
+
+      {selectedView === "combined" ? (
+        <BarChart
+          data={combinedChartData!}
+          chartTitle="Datos combinados (Grupo, Sector y Mes)"
+        />
+      ) : (
+        <>
+          <BarChart data={groupChartData!} chartTitle="Victimas por grupo" />
+          <PieChart
+            data={sectorChartData!.datasets[0].data.reduce(
+              (acc, value, index) => {
+                acc[sectorChartData!.labels[index]] = value;
+                return acc;
+              },
+              {} as { [key: string]: number }
+            )}
+            chartTitle={"Distribución por sector"}
+          />
+          <BarChart data={monthChartData!} chartTitle="Ataques por mes" />
+          <PieChart
+            data={countryChartData!.datasets[0].data.reduce(
+              (acc, value, index) => {
+                acc[countryChartData!.labels[index]] = value;
+                return acc;
+              },
+              {} as { [key: string]: number }
+            )}
+            chartTitle={"Distribución por País"}
+          />
+        </>
+      )}
     </div>
   );
 };
