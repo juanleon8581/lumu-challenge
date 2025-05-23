@@ -5,6 +5,7 @@ import { useVictims } from "@/presentation/hooks/useVictims";
 import { useState } from "react";
 import { FilterPanel } from "./FilterPanel";
 import type { FilterState } from "./FilterPanel";
+import { GroupsList } from "./GroupsList";
 
 export const VictimDashboardCharts = () => {
   const { victims } = useVictims();
@@ -122,8 +123,10 @@ export const VictimDashboardCharts = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4">
-        <FilterPanel filters={filters} onFiltersChange={setFilters} />
-
+        <div className="flex gap-8">
+          <FilterPanel filters={filters} onFiltersChange={setFilters} />
+          <GroupsList />
+        </div>
         <div>
           {hasDataToShow ? (
             <BarChart data={combinedData} chartTitle="Datos Combinados" />

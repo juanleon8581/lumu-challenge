@@ -14,6 +14,12 @@ export interface ProcessedChartData {
   datasets: ChartDataset[];
 }
 
+export const getOnlyGroupsNames = (victims: IVictim[]): string[] => {
+  const groups = victims.map((victim) => victim.group);
+  const uniqueGroups = Array.from(new Set(groups)).filter(Boolean);
+  return uniqueGroups;
+};
+
 // Procesa y cuenta la data por grupo
 export const getVictimsByGroup = (
   victims: IVictim[]
