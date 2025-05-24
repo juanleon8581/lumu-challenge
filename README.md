@@ -1,54 +1,80 @@
-# React + TypeScript + Vite
+# Lumu Challenge Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project is built with React, TypeScript, and Vite.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## Expanding the ESLint configuration
+### Core Technologies
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 18+**
+- **TypeScript**
+- **Vite**
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Additional Libraries & Tools
+
+- **Shadcn**
+- **Chart.js**
+- **React-chartjs-2**
+- **Tailwind**
+
+## Setup Instructions
+
+### Prerequisites
+
+- Node.js (v16.0.0 or higher)
+- pnpm (v7.0.0 or higher)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/juanleon8581/lumu-challenge
+   cd lumu-challenge
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   pnpm dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## Deployment
+
+### Building for Production
+
+```bash
+pnpm build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The build artifacts will be stored in the `dist/` directory, ready to be deployed to any static hosting service.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Data processing Info
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+![General View](public/readmeImgs/general.png)
+
+- To obtain information we used the endponint “/recentvictims”, after having this information in a JSON with its respective interface “IVictimAPI”, it was processed and transformed into data with its own interface “IVictim” where we rescued the most relevant data to build the graphs of such information.
+
+![Bar Chart](public/readmeImgs/barChart.png)
+
+- After having all our information in the format of interest, the information is processed to generate specific groups “Groups of attackers, country, sector and month”.
+
+![Filters](public/readmeImgs/filters.png)
+
+- Once the information has been grouped, it is passed to the graphics components to be displayed and filtered at the user's discretion.
+
+![Country Pie Chart](public/readmeImgs/country.png)
+
+- Also analyzing the endpoint “/group/<group_name>” we could find the existence of a URL that contains the information of groups, this can be accessed through a list of groups that is also rescued from the endpoin of victims and this URL is built dynamically to visit this site of interest.
+
+![Groups List](public/readmeImgs/groups.png)
