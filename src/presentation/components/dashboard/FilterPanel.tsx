@@ -24,14 +24,14 @@ export const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
   };
 
   return (
-    <Card className="w-full shadow-sm text-center">
+    <Card className="w-1/2 shadow-none text-center border-0">
       <CardHeader>
         <CardDescription>
           Selecciona el tipo de datos que deseas visualizar en el gráfico.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex items-center justify-center flex-wrap gap-4">
+        <div className="flex flex-col items-center justify-center flex-wrap gap-4">
           <div className="flex items-center space-x-2">
             <Checkbox
               id="groups"

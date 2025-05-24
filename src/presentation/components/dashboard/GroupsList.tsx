@@ -1,38 +1,35 @@
 import { useVictims } from "@/presentation/hooks/useVictims";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../ui/accordion";
-import { ScrollArea } from "../ui/scroll-area";
-import { Button } from "../ui/button";
 import { getOnlyGroupsNames } from "@/presentation/utils/chartDataUtils";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "../ui/command";
 
 export const GroupsList = () => {
   const { victims } = useVictims();
   const uniqueGroups = getOnlyGroupsNames(victims!);
 
   return (
-    <Accordion type="single" collapsible className="w-2/3">
-      <AccordionItem value="item-1">
-        <AccordionTrigger>Lista de Grupos</AccordionTrigger>
-        <AccordionContent>
-          <ScrollArea className="h-[200px]  rounded-md border p-4">
-            {uniqueGroups?.map((group) => (
-              <a
-                href={`https://www.ransomware.live/group/${group}`}
-                target="_blank"
-                key={group}
-              >
-                <Button variant={"link"} className="block">
-                  {group}
-                </Button>
-              </a>
-            ))}
-          </ScrollArea>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <Command className="w-1/2 h-60 p-4 ">
+      <CommandInput placeholder="Type a command or search..." />
+      <CommandList>
+        <CommandEmpty>Sin resultados.</CommandEmpty>
+        <CommandGroup heading="Atacantes">
+          {uniqueGroups?.map((group) => (
+            <a
+              href={`https://www.ransomware.live/group/${group}`}
+              target="_blank"
+              key={group}
+            >
+              <CommandItem>{group}</CommandItem>
+            </a>
+          ))}
+        </CommandGroup>
+      </CommandList>
+    </Command>
   );
 };

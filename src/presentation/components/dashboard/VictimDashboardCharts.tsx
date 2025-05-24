@@ -123,7 +123,7 @@ export const VictimDashboardCharts = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4">
-        <div className="flex gap-8">
+        <div className="flex gap-8 border shadow-sm rounded-md">
           <FilterPanel filters={filters} onFiltersChange={setFilters} />
           <GroupsList />
         </div>
