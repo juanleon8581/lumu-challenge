@@ -18,6 +18,7 @@ This project is built with React, TypeScript, and Vite.
 - **Chart.js**
 - **React-chartjs-2**
 - **Tailwind**
+- **Tanstack Query**
 
 ## Setup Instructions
 
