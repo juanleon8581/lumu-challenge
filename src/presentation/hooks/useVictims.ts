@@ -9,7 +9,6 @@ export const useVictims = () => {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["victims"],
     queryFn: () => getVictimsUseCase.execute(),
-    staleTime: 5 * 60 * 1000,
   });
 
   return {

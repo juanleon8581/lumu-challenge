@@ -9,7 +9,6 @@ export const useGroups = (groupName: string) => {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["groups"],
     queryFn: () => getGroupUseCase.execute(groupName),
-    staleTime: 5 * 60 * 1000,
   });
 
   return {
